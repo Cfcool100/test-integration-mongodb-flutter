@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:mongodb_test/config/enrironment.dart';
 import 'package:mongodb_test/config/mongodb.dart';
-import 'package:mongodb_test/views/display_data.dart';
 import 'package:mongodb_test/views/insert_data.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  dotenv.load(fileName: Env.filenName);
   await MongoDataBase.connect();
   runApp(const MyApp());
 }
