@@ -18,41 +18,42 @@ class _DisplayDataState extends State<DisplayData> {
         centerTitle: true,
       ),
       body: SafeArea(
-          child: FutureBuilder(
-        future: MongoDataBase.fetchData(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (snapshot.hasData) {
-            return ListView.builder(
-                itemCount: snapshot.data?.length,
-                itemBuilder: (context, index) {
-                  final data = Categories.fromJson(snapshot.data![index]);
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 15.0),
-                    child: Card(
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          child: Icon(
-                              IconData(data.icon, fontFamily: 'MaterialIcons')),
+        child: StreamBuilder(
+          stream: Stream.fromFuture(MongoDataBase.fetchData()),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.hasData) {
+              return ListView.builder(
+                  itemCount: snapshot.data?.length,
+                  itemBuilder: (context, index) {
+                    final data = Categories.fromJson(snapshot.data![index]);
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 15.0),
+                      child: Card(
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            child: Icon(IconData(data.icon,
+                                fontFamily: 'MaterialIcons')),
+                          ),
+                          title: Text(data.title),
+                          subtitle: Text(data.category),
+                          trailing: Text(data.cost.toString()),
                         ),
-                        title: Text(data.title),
-                        subtitle: Text(data.category),
-                        trailing: Text(data.cost.toString()),
                       ),
-                    ),
-                  );
-                });
-          } else {
-            return const Center(
-              child: Text('No Data found'),
-            );
-          }
-        },
-      )),
+                    );
+                  });
+            } else {
+              return const Center(
+                child: Text('No Data found'),
+              );
+            }
+          },
+        ),
+      ),
     );
   }
 }
