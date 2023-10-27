@@ -19,7 +19,7 @@ class _DisplayDataState extends State<DisplayData> {
       ),
       body: SafeArea(
         child: StreamBuilder(
-          stream: Stream.fromFuture(MongoDataBase.fetchData()),
+          stream: Stream.fromFuture(DataBase.fetchData()),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
