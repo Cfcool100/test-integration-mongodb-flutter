@@ -129,7 +129,7 @@ class _InsertDataState extends State<InsertData> {
       category:
           categoryController.text.isEmpty ? 'other' : categoryController.text,
     );
-    await MongoDataBase.insert(data);
+    await DataBase.insert(data);
 
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
