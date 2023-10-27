@@ -6,8 +6,8 @@ import 'package:mongodb_test/views/insert_data.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  dotenv.load(fileName: Env.filenName);
-  await MongoDataBase.connect();
+  await dotenv.load(fileName: Env.fileName);
+  await DataBase.connect();
   runApp(const MyApp());
 }
 
