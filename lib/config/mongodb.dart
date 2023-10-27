@@ -1,18 +1,16 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:mongodb_test/config/enrironment.dart';
 import 'package:mongodb_test/models/categories.model.dart';
 
-class MongoDataBase {
+class DataBase {
   static dynamic db, userCollection;
-
   static connect() async {
     db = await Db.create(Env.uri);
     await db.open();
     inspect(db);
-    userCollection = await db.collection(Env.collectionName);
+    userCollection = db.collection(Env.collection);
   }
 
   static Future<List<Map<String, dynamic>>> fetchData() async {
